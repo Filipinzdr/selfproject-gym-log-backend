@@ -5,11 +5,10 @@ import com.app.logworkout.log.domain.User;
 import com.app.logworkout.log.dto.RoutineCreateDTO;
 import com.app.logworkout.log.dto.RoutineResponseDTO;
 import com.app.logworkout.log.repository.RoutineRepository;
-import com.app.logworkout.log.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class RoutineService {
@@ -39,8 +38,7 @@ public class RoutineService {
                 .map(routine -> new RoutineResponseDTO(
                         routine.getId(),
                         routine.getName()
-                ))
-                .collect(Collectors.toList());
+                )).toList();
     }
 
 }
