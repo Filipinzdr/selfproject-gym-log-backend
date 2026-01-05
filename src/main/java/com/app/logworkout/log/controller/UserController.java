@@ -1,16 +1,10 @@
 package com.app.logworkout.log.controller;
 
 import com.app.logworkout.log.domain.User;
-import com.app.logworkout.log.dto.UserCreateDTO;
 import com.app.logworkout.log.dto.UserResponseDTO;
 import com.app.logworkout.log.service.UserService;
-import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

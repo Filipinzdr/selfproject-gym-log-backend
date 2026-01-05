@@ -11,10 +11,10 @@ public class UserRegisterDTO {
 
     @NotBlank
     @Email
-    private String Email;
+    private String email;
 
     @NotBlank
-    @Size(min = 5)
+    @Size(min = 6)
     private String password;
 
     public String getName() {
@@ -22,7 +22,7 @@ public class UserRegisterDTO {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getPassword() {
@@ -37,7 +37,7 @@ public class UserRegisterDTO {
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public void setPassword(String password) {
