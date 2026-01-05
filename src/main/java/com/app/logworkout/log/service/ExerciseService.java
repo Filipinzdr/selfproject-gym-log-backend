@@ -6,6 +6,8 @@ import com.app.logworkout.log.domain.User;
 import com.app.logworkout.log.dto.ExerciseCreateDTO;
 import com.app.logworkout.log.dto.ExerciseResponseDTO;
 import com.app.logworkout.log.dto.ExerciseUpdateDTO;
+import com.app.logworkout.log.exception.ForbiddenException;
+import com.app.logworkout.log.exception.NotFoundException;
 import com.app.logworkout.log.repository.ExerciseRepository;
 import com.app.logworkout.log.repository.RoutineRepository;
 import org.springframework.stereotype.Service;
@@ -51,10 +53,10 @@ public class ExerciseService {
 
 
         Exercise exercise = exerciseRepo.findById(exerciseId)
-                .orElseThrow(() -> new RuntimeException("Exercício não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Exercício não encontrado"));
 
         if(!exercise.getRoutine().getId().equals(routineId)){
-            throw new RuntimeException("Exercício não pertence a rotina");
+            throw new ForbiddenException("Exercício não pertence a rotina");
 
         }
         if (dto.getWeight() != null) {
@@ -92,10 +94,10 @@ public class ExerciseService {
 
     private Routine getRoutineOwnedByUser(Long routineId, User user){
         Routine routine = routineRepo.findById(routineId)
-                .orElseThrow(() -> new RuntimeException("Rotina não encontrada"));
+                .orElseThrow(() -> new NotFoundException("Rotina não encontrada"));
 
         if (!routine.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Rotina não pertence ao usuário");
+            throw new ForbiddenException("Rotina não pertence ao usuário");
         }
 
         return routine;

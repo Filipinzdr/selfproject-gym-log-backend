@@ -5,6 +5,8 @@ import com.app.logworkout.log.dto.AuthResponseDTO;
 import com.app.logworkout.log.dto.UserLoginDTO;
 import com.app.logworkout.log.dto.UserRegisterDTO;
 import com.app.logworkout.log.dto.UserResponseDTO;
+import com.app.logworkout.log.exception.BadRequestException;
+import com.app.logworkout.log.exception.UnauthorizedException;
 import com.app.logworkout.log.repository.UserRepository;
 import com.app.logworkout.log.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,10 +26,10 @@ public class AuthService {
 
     public AuthResponseDTO login(UserLoginDTO dto){
         User user = userRepo.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email inválido"));
+                .orElseThrow(() -> new UnauthorizedException("Email ou senha inválidos"));
 
         if (!encoder.matches(dto.getPassword(), user.getPassword())){
-            throw new RuntimeException("Senha inválida");
+            throw new UnauthorizedException("Email ou senha inválidos");
         }
 
         String token = jwt.generateToken(user.getEmail());
@@ -38,7 +40,7 @@ public class AuthService {
     public UserResponseDTO register(UserRegisterDTO dto){
 
         if(userRepo.existsByEmail(dto.getEmail())){
-            throw new RuntimeException("Email já cadastrado");
+            throw new BadRequestException("Email já cadastrado");
         }
 
         User user = new User();
