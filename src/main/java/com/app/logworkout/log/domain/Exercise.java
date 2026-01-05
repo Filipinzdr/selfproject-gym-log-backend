@@ -11,12 +11,12 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
 
-    private double weight;
+    private Double weight;
 
-    private int reps;
+    private Integer reps;
 
     @ManyToOne
     @JoinColumn(name = "routine_id", nullable = false)
@@ -41,19 +41,19 @@ public class Exercise {
         this.name = name;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public int getReps() {
+    public Integer getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
+    public void setReps(Integer reps) {
         this.reps = reps;
     }
 

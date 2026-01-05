@@ -7,6 +7,7 @@ import com.app.logworkout.log.dto.ExerciseResponseDTO;
 import com.app.logworkout.log.dto.ExerciseUpdateDTO;
 import com.app.logworkout.log.service.ExerciseService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class ExerciseController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ExerciseResponseDTO create(
             @PathVariable Long routineId,
             @Valid @RequestBody ExerciseCreateDTO dto,

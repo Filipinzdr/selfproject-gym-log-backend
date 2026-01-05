@@ -23,12 +23,7 @@ public class ExerciseService {
     }
 
     public ExerciseResponseDTO create(Long routineId, ExerciseCreateDTO dto, User user){
-        Routine routine = routineRepo.findById(routineId)
-                .orElseThrow(() -> new RuntimeException("Rotina não encontrada."));
-
-        if (!routine.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("Rotina não pertence ao usúario");
-        }
+        Routine routine = getRoutineOwnedByUser(routineId, user);
 
         Exercise exercise = new Exercise();
         exercise.setName(dto.getName());
@@ -52,12 +47,8 @@ public class ExerciseService {
             ExerciseUpdateDTO dto,
             User user
     ) {
-        Routine routine = routineRepo.findById(routineId)
-                .orElseThrow(() -> new RuntimeException("Rotina não encontrada"));
+        Routine routine = getRoutineOwnedByUser(routineId, user);
 
-        if(!routine.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("Rotina não pertence ao usuário");
-        }
 
         Exercise exercise = exerciseRepo.findById(exerciseId)
                 .orElseThrow(() -> new RuntimeException("Exercício não encontrado"));
@@ -66,9 +57,12 @@ public class ExerciseService {
             throw new RuntimeException("Exercício não pertence a rotina");
 
         }
-
-        exercise.setWeight(dto.getWeight());
-        exercise.setReps(dto.getReps());
+        if (dto.getWeight() != null) {
+            exercise.setWeight(dto.getWeight());
+        }
+        if (dto.getReps() != null) {
+            exercise.setReps(dto.getReps());
+        }
 
         Exercise saved = exerciseRepo.save(exercise);
 
@@ -83,12 +77,7 @@ public class ExerciseService {
     }
 
     public List<ExerciseResponseDTO> findAllByRoutine(Long routineid, User user){
-        Routine routine = routineRepo.findById(routineid)
-                .orElseThrow(() -> new RuntimeException("Rontina não encontrada"));
-
-        if (!routine.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("Rotina não pertence ao usuário");
-        }
+        Routine routine = getRoutineOwnedByUser(routineid, user);
 
         return exerciseRepo.findByRoutine(routine)
                 .stream()
@@ -99,8 +88,17 @@ public class ExerciseService {
                         exercise.getReps()
                 ))
                 .toList();
+    }
 
+    private Routine getRoutineOwnedByUser(Long routineId, User user){
+        Routine routine = routineRepo.findById(routineId)
+                .orElseThrow(() -> new RuntimeException("Rotina não encontrada"));
 
+        if (!routine.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Rotina não pertence ao usuário");
+        }
+
+        return routine;
     }
 
 

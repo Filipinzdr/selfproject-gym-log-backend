@@ -1,16 +1,18 @@
 package com.app.logworkout.log.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public class ExerciseCreateDTO {
     @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
 
     @NotNull
+    @PositiveOrZero
     private Double weight;
 
     @NotNull
+    @Min(1)
     private Integer reps;
 
     public ExerciseCreateDTO(String name, double weight, int reps) {

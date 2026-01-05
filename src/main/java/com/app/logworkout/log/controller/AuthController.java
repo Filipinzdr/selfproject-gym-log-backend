@@ -4,7 +4,6 @@ package com.app.logworkout.log.controller;
 import com.app.logworkout.log.dto.*;
 import com.app.logworkout.log.service.AuthService;
 import jakarta.validation.Valid;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthResponseDTO login(@RequestBody UserLoginDTO dto) {
+    public AuthResponseDTO login(@Valid @RequestBody UserLoginDTO dto) {
         return serv.login(dto);
     }
 

@@ -1,7 +1,12 @@
 package com.app.logworkout.log.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class ExerciseUpdateDTO {
+    @PositiveOrZero
     private Double weight;
+    @Min(1)
     private Integer reps;
 
     public ExerciseUpdateDTO() {
