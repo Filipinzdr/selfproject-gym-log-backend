@@ -3,6 +3,8 @@ package com.app.logworkout.log.service;
 import com.app.logworkout.log.domain.User;
 import com.app.logworkout.log.dto.AuthResponseDTO;
 import com.app.logworkout.log.dto.UserLoginDTO;
+import com.app.logworkout.log.dto.UserRegisterDTO;
+import com.app.logworkout.log.dto.UserResponseDTO;
 import com.app.logworkout.log.repository.UserRepository;
 import com.app.logworkout.log.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,5 +34,27 @@ public class AuthService {
 
         return new AuthResponseDTO(token);
     }
+
+    public UserResponseDTO register(UserRegisterDTO dto){
+
+        if(userRepo.existsByEmail(dto.getEmail())){
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        User user = new User();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(encoder.encode(dto.getPassword()));
+
+        userRepo.save(user);
+
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail()
+        );
+
+    }
+
 
 }

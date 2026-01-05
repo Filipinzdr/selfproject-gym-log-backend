@@ -1,13 +1,12 @@
 package com.app.logworkout.log.controller;
 
 
-import com.app.logworkout.log.dto.AuthResponseDTO;
-import com.app.logworkout.log.dto.UserLoginDTO;
+import com.app.logworkout.log.dto.*;
 import com.app.logworkout.log.service.AuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import oracle.jdbc.proxy.annotation.Post;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,5 +22,13 @@ public class AuthController {
     public AuthResponseDTO login(@RequestBody UserLoginDTO dto) {
         return serv.login(dto);
     }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponseDTO register(@Valid @RequestBody UserRegisterDTO dto){
+        return serv.register(dto);
+
+    }
+
 }
 
