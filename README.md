@@ -21,4 +21,4 @@ Projeto em desenvolvimento contínuo.
 
 Backend estruturalmente finalizado, provavel adição de funcionalidades no futuro.
 
-início de um frontend para brincar, mas não é meu forte e nem a ideia do projeto.
+Início de um frontend para treinar, mas não é meu forte e nem a ideia do projeto.
